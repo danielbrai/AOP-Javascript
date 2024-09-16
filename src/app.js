@@ -19,13 +19,20 @@ function logFlow(target, key, descriptor) {
 
 class AOPDummy {
 
-  @logFlow
-  cumprimentar(...nomes) {
-    console.log(`Hello, ${nomes}!`);
-  }
-
   erroProposital() {
     throw new Error("Eu sou um erro personalizado :D");
+  }
+
+  async minhaFuncaoAssincrona() {
+    console.log("\nIniciando a função assíncrona de teste.");
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    console.log("\nFunção assíncrona de teste concluída.");
+  }
+
+  @logFlow
+  async cumprimentar(...nomes) {
+    await this.minhaFuncaoAssincrona();
+    console.log(`Hello, ${nomes}!`);
   }
 
   @logFlow
@@ -43,5 +50,5 @@ class AOPDummy {
 
 const dummyObject = new AOPDummy();
 dummyObject.cumprimentar('Tadalafilo', 'Calabreso');
-dummyObject.executarDivisaoNatural(2, 0)
-dummyObject.chamarFuncaoInexistente();
+// dummyObject.executarDivisaoNatural(2, 0)
+// dummyObject.chamarFuncaoInexistente();
